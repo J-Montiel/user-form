@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html>
+<title> First JS App</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <div>
+        <h3>Users</h3>
+    </div>
+
+    <div class="form">
+
+        <form id="userForm" class="user-form">
+            <div>
+                <div class="field">
+                    <label for="name">Name</field>
+                        <input type="text" id="name" name="name" placeholder="Julio" maxlength="20" />
+                </div>
+                <div class="field">
+                    <label for="lastName">Last name</field>
+                        <input type="text" id="lastName" name="lastName" placeholder="Montiel" maxlength="20" />
+                </div>
+
+                <div class="field">
+                    <label for="age">Agre</field>
+                        <input type="number" id="age" name="age" placeholder="26" maxlength="3" />
+                </div>
+
+            </div>
+
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+
+    <div class="user-posted">
+        <h3>User posted</h3>
+        <table id="users-table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Last name
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    julio
+                </td>
+                <td>
+                    Montiel
+                </td>
+                <td>
+                    20
+                </td>
+                <td>
+                    <button id="btnDeleteUser" type="button">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    julio
+                </td>
+                <td>
+                    Montiel
+                </td>
+                <td>
+                    20
+                </td>
+                <td>
+                    <button id="btnDeleteUser" type="button">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+    </div>
+</body>
+<style>
+    html {
+        font-family: "Roboto", "Helvetica Neue Light", "Helvetica Neue, Helvetica", "Arial", "Lucida Grande", "sans-serif";
+        font-size: 18px;
+        background-color: #3f51b524;
+    }
+
+
+    .title,
+    h3 {
+        text-align: center;
+        align-content: center;
+    }
+
+    .user-form {
+        text-align: center;
+        /*  background-color: bisque; */
+        padding: 20px;
+    }
+
+    .user-form .field {
+        padding: 10px;
+    }
+
+    input[type=text],
+    select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        background-color: #e3e5f1;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=number], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        background-color: #e3e5f1;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4a58a3cc;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #5260afcc;
+    }
+
+    .form,.user-posted {
+        border-radius: 5px;
+        background-color: #c2c5d4;
+        padding: 20px;
+        
+    }
+
+    /*.user-posted {
+        background-color: rgb(179, 176, 176);
+    }*/
+
+    #users-table td,
+    #users-table th {
+        border: 1px solid #302f2f;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #users-table tr:nth-child(2n) {
+        background-color: #c2c5d4;
+    }
+
+    #users-table tr:nth-child(2n+1) {
+        background-color: #d1d4e8;
+    }
+
+    #users-table tr:hover {
+        background-color: #5d6592cc;
+        border: 1px solid #302f2f;
+    }
+
+    #users-table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #3f51b5cc;
+        color: #f7f1f1;
+        text-align: center;
+    }
+
+    @media screen and (min-width: 800px) {
+        .form,.user-posted {
+            width: 50%;
+            margin: auto;
+        }
+    }
+
+    @media screen and (max-width: 800px) {
+        .form,.user-posted {
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    //cuando inicia la pagina se obtiene  el formulario por el id asignado
+    var form = document.getElementById('userForm');
+
+    // al formulario se le agrega un listener cuando se accione el input dentro del formulario de tipo submit
+    form.addEventListener('submit', function (e) {
+        // una acción submit recarga el navegador y con preventDefault se le indica 
+        // que tenga un compartamiento default para que no se recargue la pagina
+        e.preventDefault()
+
+        // con FormData podemos obtener todos los campos del formulario y su valores, form data devuelve un objeto
+        // donde nosotros podemos acceder a los valores de los campos con get 
+        var formData = new FormData(form);
+        console.log(request)
+
+        var request = {
+            name: formData.get("name"),
+            lastName: formData.get("lastName"),
+            age: formData.get("age")
+        };
+
+        console.log(request)
+
+        // con fetch podemos hacer peticiones http hacia ...typicode.com para que nos devuela los valores enviados en el request
+        // el formato json
+        fetch('https://jsonplaceholder.typicode.com/posts',
+            {
+                method: 'POST',
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                }
+            })
+            .then(function (response) {
+                // respuesta de la peticion http
+                console.log(response);
+                return response.json()
+            })
+            .then(function (data) {
+                console.log(data)
+
+                // 
+                var table = document.getElementById('users-table');
+                var tableRow = table.insertRow(-1);
+                var rowName = tableRow.insertCell(0);
+                rowName.innerText = data.name;
+
+                var rowLastName = tableRow.insertCell(1);
+                rowLastName.innerText = data.lastName;
+
+                var rowAge = tableRow.insertCell(2);
+                rowAge.innerText = data.age;
+
+                var rowBtnDelete = tableRow.insertCell(3);
+                var btn = rowBtnDelete.appendChild(document.createElement('button'));
+                btn.innerText = "Delete";
+                btn.addEventListener("click", function () {
+                    alert("this is new element");
+                });
+            }).catch(error => console.error('Error:', error));
+    });
+
+    var button = document.getElementById('btnDeleteUser');
+    button.addEventListener("click", function () {
+        alert("delete user "); return false;
+    }, false);
+
+</script>
+
+</html>
