@@ -181,6 +181,7 @@
     }
 
     @media screen and (min-width: 800px) {
+
         .form,
         .user-posted {
             width: 50%;
@@ -189,6 +190,7 @@
     }
 
     @media screen and (max-width: 800px) {
+
         .form,
         .user-posted {
             width: 90%;
@@ -222,6 +224,7 @@
         var formData = new FormData(form);
         console.log(request);
 
+        // esta es una forma de crear objetos o referencias de datos en js con estructura json
         var request = {
             name: formData.get("name"),
             lastName: formData.get("lastName"),
@@ -230,60 +233,39 @@
 
         console.log(request)
 
-        // con fetch podemos hacer peticiones http hacia cualquier dominio para que nos devuela los valores enviados mediante un cuerpo de contenido (request
-        // el formato json)
-        
-        fetch('https://jsonplaceholder.typicode.com/posts',
-            {
-                method: 'POST',
-                body: JSON.stringify(request),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                }
-            })
-            .then(function (response) {
-                // respuesta de la peticion http
-                console.log(response);
-                return response.json()
-            })
-            .then(function (data) {
-                // respuesta de la petición enviada a typicode
-                console.log(data)
+        // Accede al dom del documento para obtener la referencia de la tabla por el id 
+        var table = document.getElementById('users-table');
+        // Se agrega un nuevo row a la tabla en la ultima posicion (-1 agrega un elemento detras del ultimo)
+        var tableRow = table.insertRow(-1);
+        // como ya tenemos el row de la tabla agregaremos una celda en la posicion indicada en orden de columnas
+        var cellName = tableRow.insertCell(0);
+        // con innertTex a la celda creada se le asigna valor en texto 
+        cellName.innerText = formData.get("name");
 
-                // Accede al dom del documento para obtener la referencia de la tabla por el id 
-                var table = document.getElementById('users-table');
-                // Se agrega un nuevo row a la tabla en la ultima posicion (-1 agrega un elemento detras del ultimo)
-                var tableRow = table.insertRow(-1);
-                // como ya tenemos el row de la tabla agregaremos una celda en la posicion indicada en orden de columnas
-                var cellName = tableRow.insertCell(0);
-                // con innertTex a la celda creada se le asigna valor en texto 
-                cellName.innerText = data.name;
+        var cellLastName = tableRow.insertCell(1);
+        cellLastName.innerText = formData.get("lastName");
+        var cellAge = tableRow.insertCell(2);
+        cellAge.innerText = formData.get("age");
 
-                var cellLastName = tableRow.insertCell(1);
-                cellLastName.innerText = data.lastName;
-                var cellAge = tableRow.insertCell(2);
-                cellAge.innerText = data.age;
+        var cellBtnDelete = tableRow.insertCell(3);
+        // con createElement podemos crear elementos o etiquetas dentro del documentos (pagina actual en el navegador) como buttons, div, h5, spam..
+        var button = document.createElement('button');
 
-                var cellBtnDelete = tableRow.insertCell(3);
-                // con createElement podemos crear elementos o etiquetas dentro del documentos (pagina actual en el navegador) como buttons, div, h5, spam..
-                var button = document.createElement('button');
+        // a la celda creada se le agrega un nuevo nodo o elemento hijo dentro de esa etiqueta en el arbol del dom del documento
+        var btn = cellBtnDelete.appendChild(button);
+        // al boton creado se le asigna el valor que contendra ese elemento
+        btn.innerText = "Delete";
 
-                // a la celda creada se le agrega un nuevo nodo o elemento hijo dentro de esa etiqueta en el arbol del dom del documento
-                var btn = cellBtnDelete.appendChild(button);
-                // al boton creado se le asigna el valor que contendra ese elemento
-                btn.innerText = "Delete";
-
-                // al boton se le agrega evento listener de tipo click el cual nos ayudara e eliminar el row creado en la tabla
-                btn.addEventListener("click", function () {
-                    alert("this new element will be deleted");
-                    tableRow.remove();
-                });
-            }).catch(error => console.error('Error:', error));
+        // al boton se le agrega evento listener de tipo click el cual nos ayudara e eliminar el row creado en la tabla
+        btn.addEventListener("click", function () {
+            alert("this new element will be deleted");
+            tableRow.remove();
+        });
     });
 
     var button = document.getElementById('btnDeleteUser');
     button.addEventListener("click", function () {
-        alert("delete user "); 
+        alert("delete user ");
     }, false);
 
 </script>
