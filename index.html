@@ -70,20 +70,6 @@
                     <button id="btnDeleteUser" type="button">Delete</button>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    julio
-                </td>
-                <td>
-                    Montiel
-                </td>
-                <td>
-                    20
-                </td>
-                <td>
-                    <button id="btnDeleteUser" type="button">Delete</button>
-                </td>
-            </tr>
         </table>
     </div>
     <div>
@@ -214,25 +200,25 @@
     //cuando inicia la pagina se obtiene  el formulario por el id asignado
     var form = document.getElementById('userForm');
 
-    // al formulario se le agrega un listener cuando se accione el input dentro del formulario de tipo submit
+    // al formulario se le agrega un listener cuando se accione un elemento input dentro del formulario de tipo submit
     form.addEventListener('submit', function (e) {
         // una acción submit recarga el navegador y con preventDefault se le indica 
-        // que tenga un compartamiento default para que no se recargue la pagina
+        // que tenga un compartamiento default en el navegador para que no se recargue la pagina
         e.preventDefault()
 
-        //para acceder a los vaoresde loscampos del formulario podemos hacerlo buscado el campo en el documento por l id asignado
+        //para acceder a los valores de los campos del formulario podemos hacerlo buscado el campo en el documento por le id asignado
         //y accediendo a su valor 
         console.log(document.getElementById("name").value);
         console.log(document.getElementById("lastName").value);
 
-        // tambien podemos acceder a los valores del formulario accediendo al valor de los inputs mediante el
+        // tambien podemos acceder a los valores del formulario obteniendo los inputs mediante el
         // identificador "name" asignado
         console.log(form.name)
         console.log(form.lastName)
         console.log(form.age)
 
         // con FormData podemos obtener todos los campos del formulario y su valores, form data devuelve un objeto
-        // donde nosotros podemos acceder a los valores de los campos con get 
+        // donde nosotros podemos acceder a los valores de los campos con get y nombre del campos
         var formData = new FormData(form);
         console.log(request);
 
@@ -244,8 +230,9 @@
 
         console.log(request)
 
-        // con fetch podemos hacer peticiones http hacia cualquier dominio para que nos devuela los valores enviados ediante un cuerpo de cntenido (request
+        // con fetch podemos hacer peticiones http hacia cualquier dominio para que nos devuela los valores enviados mediante un cuerpo de contenido (request
         // el formato json)
+        
         fetch('https://jsonplaceholder.typicode.com/posts',
             {
                 method: 'POST',
@@ -263,13 +250,13 @@
                 // respuesta de la petición enviada a typicode
                 console.log(data)
 
-                // Accede al dom del documento para la referencia de la tabla por el id 
+                // Accede al dom del documento para obtener la referencia de la tabla por el id 
                 var table = document.getElementById('users-table');
-                // Se agreg un nuevo row a la tabla en la ultima posicion (-1 agrega un elemento detras del ultimo)
+                // Se agrega un nuevo row a la tabla en la ultima posicion (-1 agrega un elemento detras del ultimo)
                 var tableRow = table.insertRow(-1);
-                // como ya tenemos el row de la tabla agregaremos una cel en la posicion indicada
+                // como ya tenemos el row de la tabla agregaremos una celda en la posicion indicada en orden de columnas
                 var cellName = tableRow.insertCell(0);
-                // con innertTex a la celda creaga se le asign valor en texto 
+                // con innertTex a la celda creada se le asigna valor en texto 
                 cellName.innerText = data.name;
 
                 var cellLastName = tableRow.insertCell(1);
@@ -278,24 +265,25 @@
                 cellAge.innerText = data.age;
 
                 var cellBtnDelete = tableRow.insertCell(3);
-                // con createElement podemos crear elementos o etiquetas de html5 pude ser div, h5, spam..
+                // con createElement podemos crear elementos o etiquetas dentro del documentos (pagina actual en el navegador) como buttons, div, h5, spam..
                 var button = document.createElement('button');
 
-                // a la celda creada se le agrega un nuevo nodo o elemento como hijo dentro de esa etiqueta
+                // a la celda creada se le agrega un nuevo nodo o elemento hijo dentro de esa etiqueta en el arbol del dom del documento
                 var btn = cellBtnDelete.appendChild(button);
                 // al boton creado se le asigna el valor que contendra ese elemento
                 btn.innerText = "Delete";
 
-                // al boton se le agrega un listener de tipo click el cual nos ayudara e eliminar el row creado en la tabla
+                // al boton se le agrega evento listener de tipo click el cual nos ayudara e eliminar el row creado en la tabla
                 btn.addEventListener("click", function () {
-                    alert("this is new element");
+                    alert("this new element will be deleted");
+                    tableRow.remove();
                 });
             }).catch(error => console.error('Error:', error));
     });
 
     var button = document.getElementById('btnDeleteUser');
     button.addEventListener("click", function () {
-        alert("delete user "); return false;
+        alert("delete user "); 
     }, false);
 
 </script>
